@@ -16,12 +16,12 @@ class Contact extends Model
         'nome',
         'email',
         'telefone',
-        'rua',
+        'cep',
+        'logradouro',
         'numero',
         'bairro',
         'cidade',
         'estado',
-        'cep',
         'pais'
     ];
 }

@@ -33,18 +33,31 @@ class ContactController extends Controller
     {
         $user_id = Auth::id();
 
+        $request->validate([
+            'nome' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'telefone' => 'required|max:30',
+            'cep' => 'required|max:8',
+            'logradouro' => 'required|max:255',
+            'numero' => 'required|max:15',
+            'bairro' => 'required|max:255',
+            'cidade' => 'required|max:255',
+            'estado' => 'required|max:255',
+            'pais' => 'required|max:255'
+        ]);
+
         Contact::create([
             'user_id' => $user_id,
             'nome' => $request->get('nome'),
             'email' => $request->get('email'),
             'telefone' => $request->get('telefone'),
-            'rua' => $request->get('rua'),
+            'cep' => $request->get('cep'),
+            'logradouro' => $request->get('logradouro'),
             'numero' => $request->get('numero'),
             'bairro' => $request->get('bairro'),
             'cidade' => $request->get('cidade'),
             'estado' => $request->get('estado'),
-            'cep' => $request->get('cep'),
-            'pais' => $request->get('pais'),
+            'pais' => $request->get('pais')
         ]);
 
         return redirect()->route('contacts.index');
