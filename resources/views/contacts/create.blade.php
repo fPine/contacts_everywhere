@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Registrar novo Contato') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('contacts.store') }}">
+                    <form method="POST" action="{{ route('contacts.store') }}" id="form-contact">
                         @csrf
 
                         <div class="row mb-3">
@@ -164,4 +164,49 @@
         </div>
     </div>
 </div>
+<script>
+    function mascara(o, f) {
+        v_obj = o;
+        v_fun = f;
+        setTimeout("execmascara()", 1);
+    }
+
+    function execmascara() {
+        v_obj.value = v_fun(v_obj.value);
+    }
+
+
+    function mascaraTelefone(valor) {
+        valor = valor.replace(/\D/g, "");
+        valor = valor.replace(/^(\d{2})(\d)/, "($1) $2");
+        valor = valor.replace(/(\d{5})(\d)/, "$1-$2");
+        return valor;
+    }
+
+    function mascaraCep(valor) {
+        valor = valor.replace(/\D/g, "");
+        valor = valor.replace(/^(\d{5})(\d)/, "$1-$2");
+        return valor;
+    }
+
+    window.onload = function() {
+        configurarMascara('telefone', '#form-contact input[name="telefone"]', mascaraTelefone, 15);
+        configurarMascara('cep', '#form-contact input[name="cep"]', mascaraCep, 9);
+    };
+
+    function configurarMascara(tipo, seletor, funcaoMascara, tamanhoMax) {
+        let campos = document.querySelectorAll(seletor);
+        campos.forEach(function(campo) {
+            campo.setAttribute('maxlength', tamanhoMax);
+            campo.onkeyup = function() {
+                mascara(this, funcaoMascara);
+            };
+        });
+    }
+
+    window.addEventListener( 'focus', ( event )=>{
+        configurarMascara('telefone', '#form-contact input[name="telefone"]', mascaraTelefone, 15);
+        configurarMascara('cep', '#form-contact input[name="cep"]', mascaraCep, 9);
+    });
+</script>
 @endsection

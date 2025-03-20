@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nome', 255);
             $table->string('email', 255);
             $table->string('telefone', 30);
-            $table->string('cep', 8);
+            $table->string('cep', 10);
             $table->string('logradouro', 255);
             $table->string('numero', 15);
             $table->string('bairro', 255);

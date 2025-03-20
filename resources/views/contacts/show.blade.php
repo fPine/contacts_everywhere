@@ -8,78 +8,27 @@
                     <div class="card-header">{{ __('Perfil do Contato') }}</div>
 
                     <div class="card-body">
-                        <div class="row mb-3">
-                            <label for="nome" class="col-md-4 col-form-label text-md-end">{{ __('Nome') }}</label>
-
-                            <div class="col-md-6">
-                                <h3>{{ $contact->nome }}</h3>
-                            </div>
+                        <div>
+                            <ul>
+                                <li><b>Nome:</b> {{ $contact->nome }}</li>
+                                <li><b>E-mail:</b> {{ $contact->email }}</li>
+                                <li><b>Telefone:</b> {{ $contact->telefone }}</li>
+                                <li><b>Logradouro:</b> {{ $contact->logradouro }}</li>
+                                <li><b>Número:</b> {{ $contact->numero }}</li>
+                                <li><b>Bairro:</b> {{ $contact->bairro }}</li>
+                                <li><b>CEP:</b> {{ $contact->cep }}</li>
+                                <li><b>Cidade:</b> {{ $contact->cidade }}</li>
+                                <li><b>Estado:</b> {{ $contact->estado }}</li>
+                                <li><b>País:</b> {{ $contact->pais }}</li>
+                            </ul>
                         </div>
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email') }}</label>
-
-                            <div class="col-md-6">
-                                <p>{{ $contact->email }}</p>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="telefone"
-                                   class="col-md-4 col-form-label text-md-end">{{ __('Telefone') }}</label>
-
-                            <div class="col-md-6">
-                                <p>{{ $contact->telefone }}</p>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="logradouro"
-                                   class="col-md-4 col-form-label text-md-end">{{ __('Logradouro') }}</label>
-
-                            <div class="col-md-6">
-                                <p>{{ $contact->logradouro }}, {{ $contact->numero }}</p>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="bairro" class="col-md-4 col-form-label text-md-end">{{ __('Bairro') }}</label>
-
-                            <div class="col-md-6">
-                                <p>{{ $contact->bairro }}</p>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="cidade" class="col-md-4 col-form-label text-md-end">{{ __('Cidade') }}</label>
-
-                            <div class="col-md-6">
-                                <p>{{ $contact->cidade }}</p>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="estado" class="col-md-4 col-form-label text-md-end">{{ __('Estado') }}</label>
-
-                            <div class="col-md-6">
-                                <p>{{ $contact->estado }}</p>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="cep" class="col-md-4 col-form-label text-md-end">{{ __('CEP') }}</label>
-
-                            <div class="col-md-6">
-                                <p>{{ $contact->cep }}</p>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="pais" class="col-md-4 col-form-label text-md-end">{{ __('País') }}</label>
-
-                            <div class="col-md-6">
-                                <p>{{ $contact->pais }}</p>
-                            </div>
+                        <div style="display: flex; justify-content: flex-end;">
+                            <a style="margin: 2px;" href="{{ route('contacts.edit', $contact->id) }}"><button class="btn btn-success">Editar</button></a>
+                            <form style="margin: 2px;" action="{{ route('contacts.destroy', $contact->id) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger">Enviar para Lixeira</button>
+                            </form>
                         </div>
                     </div>
                 </div>

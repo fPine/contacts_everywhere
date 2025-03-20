@@ -5,17 +5,18 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Registrar novo Contato') }}</div>
+                <div class="card-header">{{ __('Editar Contato') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('contacts.store') }}">
+                    <form method="POST" action="{{ route('contacts.update', $contact->id) }}" id="form-contact">
                         @csrf
+                        @method('PUT')
 
                         <div class="row mb-3">
                             <label for="nome" class="col-md-4 col-form-label text-md-end">{{ __('Nome') }}</label>
 
                             <div class="col-md-6">
-                                <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{ old('nome') }}" required autocomplete="nome" autofocus>
+                                <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{ $contact->nome }}" required autocomplete="nome" autofocus>
 
                                 @error('nome')
                                     <span class="invalid-feedback" role="alert">
@@ -29,7 +30,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $contact->email }}" required autocomplete="email">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -43,7 +44,7 @@
                             <label for="telefone" class="col-md-4 col-form-label text-md-end">{{ __('Telefone') }}</label>
 
                             <div class="col-md-6">
-                                <input id="telefone" type="text" class="form-control @error('telefone') is-invalid @enderror" name="telefone" required autocomplete="telefone">
+                                <input id="telefone" type="text" class="form-control @error('telefone') is-invalid @enderror" name="telefone" value="{{ $contact->telefone }}" required autocomplete="telefone">
 
                                 @error('telefone')
                                     <span class="invalid-feedback" role="alert">
@@ -57,7 +58,7 @@
                             <label for="cep" class="col-md-4 col-form-label text-md-end">{{ __('CEP') }}</label>
 
                             <div class="col-md-6">
-                                <input id="cep" type="text" class="form-control @error('cep') is-invalid @enderror" name="cep" value="{{ old('cep') }}" required autocomplete="cep">
+                                <input id="cep" type="text" class="form-control @error('cep') is-invalid @enderror" name="cep" value="{{ $contact->cep }}" required autocomplete="cep">
 
                                 @error('cep')
                                 <span class="invalid-feedback" role="alert">
@@ -71,7 +72,7 @@
                             <label for="logradouro" class="col-md-4 col-form-label text-md-end">{{ __('Logradouro') }}</label>
 
                             <div class="col-md-6">
-                                <input id="logradouro" type="text" class="form-control @error('logradouro') is-invalid @enderror" name="logradouro" value="{{ old('logradouro') }}" required autocomplete="logradouro">
+                                <input id="logradouro" type="text" class="form-control @error('logradouro') is-invalid @enderror" name="logradouro" value="{{ $contact->logradouro }}" required autocomplete="logradouro">
 
                                 @error('logradouro')
                                 <span class="invalid-feedback" role="alert">
@@ -85,7 +86,7 @@
                             <label for="numero" class="col-md-4 col-form-label text-md-end">{{ __('Número') }}</label>
 
                             <div class="col-md-6">
-                                <input id="numero" type="text" class="form-control @error('numero') is-invalid @enderror" name="numero" value="{{ old('numero') }}" required autocomplete="numero">
+                                <input id="numero" type="text" class="form-control @error('numero') is-invalid @enderror" name="numero" value="{{ $contact->numero }}" required autocomplete="numero">
 
                                 @error('numero')
                                 <span class="invalid-feedback" role="alert">
@@ -99,7 +100,7 @@
                             <label for="bairro" class="col-md-4 col-form-label text-md-end">{{ __('Bairro') }}</label>
 
                             <div class="col-md-6">
-                                <input id="bairro" type="text" class="form-control @error('bairro') is-invalid @enderror" name="bairro" value="{{ old('bairro') }}" required autocomplete="bairro">
+                                <input id="bairro" type="text" class="form-control @error('bairro') is-invalid @enderror" name="bairro" value="{{ $contact->bairro }}" required autocomplete="bairro">
 
                                 @error('bairro')
                                 <span class="invalid-feedback" role="alert">
@@ -113,7 +114,7 @@
                             <label for="cidade" class="col-md-4 col-form-label text-md-end">{{ __('Cidade') }}</label>
 
                             <div class="col-md-6">
-                                <input id="cidade" type="text" class="form-control @error('cidade') is-invalid @enderror" name="cidade" value="{{ old('cidade') }}" required autocomplete="cidade">
+                                <input id="cidade" type="text" class="form-control @error('cidade') is-invalid @enderror" name="cidade" value="{{ $contact->cidade }}" required autocomplete="cidade">
 
                                 @error('cidade')
                                 <span class="invalid-feedback" role="alert">
@@ -127,7 +128,7 @@
                             <label for="estado" class="col-md-4 col-form-label text-md-end">{{ __('Estado') }}</label>
 
                             <div class="col-md-6">
-                                <input id="estado" type="text" class="form-control @error('estado') is-invalid @enderror" name="estado" value="{{ old('estado') }}" required autocomplete="estado">
+                                <input id="estado" type="text" class="form-control @error('estado') is-invalid @enderror" name="estado" value="{{ $contact->estado }}" required autocomplete="estado">
 
                                 @error('estado')
                                 <span class="invalid-feedback" role="alert">
@@ -141,7 +142,7 @@
                             <label for="pais" class="col-md-4 col-form-label text-md-end">{{ __('País') }}</label>
 
                             <div class="col-md-6">
-                                <input id="pais" type="text" class="form-control @error('pais') is-invalid @enderror" name="pais" value="{{ old('pais') }}" required autocomplete="pais">
+                                <input id="pais" type="text" class="form-control @error('pais') is-invalid @enderror" name="pais" value="{{ $contact->pais }}" required autocomplete="pais">
 
                                 @error('pais')
                                 <span class="invalid-feedback" role="alert">
@@ -154,7 +155,7 @@
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Cadastrar') }}
+                                    {{ __('Atualizar') }}
                                 </button>
                             </div>
                         </div>
@@ -164,4 +165,49 @@
         </div>
     </div>
 </div>
+<script>
+    function mascara(o, f) {
+        v_obj = o;
+        v_fun = f;
+        setTimeout("execmascara()", 1);
+    }
+
+    function execmascara() {
+        v_obj.value = v_fun(v_obj.value);
+    }
+
+
+    function mascaraTelefone(valor) {
+        valor = valor.replace(/\D/g, "");
+        valor = valor.replace(/^(\d{2})(\d)/, "($1) $2");
+        valor = valor.replace(/(\d{5})(\d)/, "$1-$2");
+        return valor;
+    }
+
+    function mascaraCep(valor) {
+        valor = valor.replace(/\D/g, "");
+        valor = valor.replace(/^(\d{5})(\d)/, "$1-$2");
+        return valor;
+    }
+
+    window.onload = function() {
+        configurarMascara('telefone', '#form-contact input[name="telefone"]', mascaraTelefone, 15);
+        configurarMascara('cep', '#form-contact input[name="cep"]', mascaraCep, 9);
+    };
+
+    function configurarMascara(tipo, seletor, funcaoMascara, tamanhoMax) {
+        let campos = document.querySelectorAll(seletor);
+        campos.forEach(function(campo) {
+            campo.setAttribute('maxlength', tamanhoMax);
+            campo.onkeyup = function() {
+                mascara(this, funcaoMascara);
+            };
+        });
+    }
+
+    window.addEventListener( 'focus', ( event )=>{
+        configurarMascara('telefone', '#form-contact input[name="telefone"]', mascaraTelefone, 15);
+        configurarMascara('cep', '#form-contact input[name="cep"]', mascaraCep, 9);
+    });
+</script>
 @endsection

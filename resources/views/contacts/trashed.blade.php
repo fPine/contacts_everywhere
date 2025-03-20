@@ -4,12 +4,9 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card" style="margin-bottom: 30px">
-                <div class="card-header" style="display: flex; justify-content: center"><h3>Bem-vindo, você possui {{ $contacts->count() }} contatos cadastrados.</h3></div>
-            </div>
             @foreach($contacts as $contact)
-                <div class="card" style="margin-bottom: 10px">
-                    <div class="card-header"><h4><a href="{{ route('contacts.show', $contact->id) }}">{{ $contact->nome }}</a></h4></div>
+                <div class="card">
+                    <div class="card-header"><h4>{{ $contact->nome }}</h4></div>
 
                     <div class="card-body">
                         <div>
@@ -19,11 +16,11 @@
                            </ul>
                         </div>
                         <div style="display: flex; justify-content: flex-end;">
-                            <a style="margin: 2px;" href="{{ route('contacts.edit', $contact->id) }}"><button class="btn btn-success">Editar</button></a>
-                            <form style="margin: 2px;" action="{{ route('contacts.destroy', $contact->id) }}" method="post">
+                            <a style="margin: 2px;" href="{{ route('restore', $contact->id) }}"><button class="btn btn-success">Restaurar</button></a>
+                            <form style="margin: 2px;" action="{{ route('forceDelete', $contact->id) }}" method="post">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger">Enviar para Lixeira</button>
+                                <button class="btn btn-danger">Excluir</button>
                             </form>
                         </div>
                     </div>
