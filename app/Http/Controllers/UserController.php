@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -14,9 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::query()->find(Auth::id());
 
-        return view('users.index', ['user' => $user]);
     }
 
     /**
@@ -24,7 +23,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+
     }
 
     /**
@@ -32,13 +31,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        User::create([
-           'nome' => $request->get('nome'),
-           'email' => $request->get('email'),
-           'password' => Hash::make($request->get('password')),
-        ]);
 
-        return redirect()->route('users.index');
     }
 
     /**
@@ -46,7 +39,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return redirect()->route('users.index', ['user' => $user]);
+        return view('users.show', ['user' => $user]);
     }
 
     /**
@@ -54,7 +47,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('users.edit', ['user' => $user]);
     }
 
     /**
@@ -62,7 +55,26 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        Validator::make($request->all(), [
+            'nome' => ['string', 'max:255'],
+            'email' => ['string', 'email', 'max:255'],
+            'password' => ['string', 'min:8', 'confirmed'],
+        ])->validate();
+
+        $user = User::query()->find($user->id);
+
+        if ($user->exists) {
+            $user->nome = $request->get('nome');
+            $user->email = $request->get('email');
+
+            if ($request->get('password')) {
+                $user->password = Hash::make($request->get('password'));
+            }
+
+            $user->push();
+        }
+
+        return redirect()->route('users.show', ['user' => $user]);
     }
 
     /**

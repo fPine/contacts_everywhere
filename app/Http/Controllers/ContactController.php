@@ -33,21 +33,34 @@ class ContactController extends Controller
     {
         $user_id = Auth::id();
 
+        $request->validate([
+            'nome' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'telefone' => 'required|max:30',
+            'cep' => 'required|max:10',
+            'logradouro' => 'required|max:255',
+            'numero' => 'required|max:15',
+            'bairro' => 'required|max:255',
+            'cidade' => 'required|max:255',
+            'estado' => 'required|max:255',
+            'pais' => 'required|max:255'
+        ]);
+
         Contact::create([
             'user_id' => $user_id,
             'nome' => $request->get('nome'),
             'email' => $request->get('email'),
             'telefone' => $request->get('telefone'),
-            'rua' => $request->get('rua'),
+            'cep' => $request->get('cep'),
+            'logradouro' => $request->get('logradouro'),
             'numero' => $request->get('numero'),
             'bairro' => $request->get('bairro'),
             'cidade' => $request->get('cidade'),
             'estado' => $request->get('estado'),
-            'cep' => $request->get('cep'),
-            'pais' => $request->get('pais'),
+            'pais' => $request->get('pais')
         ]);
 
-        return redirect()->route('contacts.index');
+        return redirect()->route('home');
     }
 
     /**
@@ -77,11 +90,24 @@ class ContactController extends Controller
     {
         $contact = Contact::query()->find($contact->id);
 
+        $request->validate([
+            'nome' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'telefone' => 'required|max:30',
+            'cep' => 'required|max:10',
+            'logradouro' => 'required|max:255',
+            'numero' => 'required|max:15',
+            'bairro' => 'required|max:255',
+            'cidade' => 'required|max:255',
+            'estado' => 'required|max:255',
+            'pais' => 'required|max:255'
+        ]);
+
         if ($contact->exists) {
             $contact->nome = $request->get('nome');
             $contact->email = $request->get('email');
             $contact->telefone = $request->get('telefone');
-            $contact->rua = $request->get('rua');
+            $contact->logradouro = $request->get('logradouro');
             $contact->numero = $request->get('numero');
             $contact->bairro = $request->get('bairro');
             $contact->cidade = $request->get('cidade');
@@ -106,6 +132,32 @@ class ContactController extends Controller
             $contact->delete();
         }
 
-        return redirect()->route('contacts.index');
+        return redirect()->route('home');
+    }
+
+    public function trashed() {
+        $contacts = Contact::onlyTrashed()->get();
+
+        return view('contacts.trashed', ['contacts' => $contacts]);
+    }
+
+    public function forceDelete($id)
+    {
+        $contact = Contact::withTrashed()->find($id);
+
+        $contact->forceDelete();
+
+
+        return redirect()->route('home');
+    }
+
+    public function restore($id) {
+
+        $contact = Contact::withTrashed()->find($id);
+
+        $contact->restore();
+
+
+        return redirect()->route('home');
     }
 }

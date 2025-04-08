@@ -14,16 +14,16 @@ return new class extends Migration
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('name');
-            $table->string('email');
-            $table->string('telephone');
-            $table->string('street');
-            $table->string('number');
-            $table->string('neighborhood');
-            $table->string('city');
-            $table->string('state');
-            $table->string('zip_code');
-            $table->string('country');
+            $table->string('nome', 255);
+            $table->string('email', 255);
+            $table->string('telefone', 30);
+            $table->string('cep', 10);
+            $table->string('logradouro', 255);
+            $table->string('numero', 15);
+            $table->string('bairro', 255);
+            $table->string('cidade', 255);
+            $table->string('estado', 255);
+            $table->string('pais', 255);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
